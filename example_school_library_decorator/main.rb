@@ -1,6 +1,42 @@
 # rubocop:disable all
+require_relative "./book.rb"
+require_relative "./person.rb"
+require_relative "./rental.rb"
+
+class Bookstore
+  def initialize
+    @books = []
+    @person = []
+    @rentals = []
+  end
+
+  def list_all_books
+    if @books.empty?
+      puts "No books found"
+      return
+    end
+
+    @books.each do |book|
+      puts "Title: #{book.title}, Author: #{book.author}"
+    end
+  end
+
+  def create_book
+    print "Book title: "
+    title = gets.chomp
+
+    print "Book author: "
+    author = gets.chomp
+
+    @books << Book.new(title, author)
+    puts "Book created succesfully"
+  end
+end
+
 def main
   response = nil
+
+  bookstore = Bookstore.new()
 
   puts "Welcome to School Library App!\n\n"
 
@@ -20,13 +56,13 @@ def main
 
     case response
     when "1"
-      puts "Display books"
+      bookstore.list_all_books()
     when "2"
       puts "Display people"
     when "3"
       puts "Create person"
     when "4"
-      puts "Create a book"
+      bookstore.create_book()
     when "5"
       puts "Create a rental"
     when "6"
