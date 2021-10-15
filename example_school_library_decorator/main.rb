@@ -34,6 +34,26 @@ class Bookstore
     end
   end
 
+  def list_all_rentals
+    print "ID of person: "
+    id = gets.chomp.to_i
+
+    rentals = @rentals.filter do |rental|
+      rental.person.id == id
+    end
+
+    if rentals.empty?
+      puts "No rentals found for the given ID"
+      return
+    end
+
+    puts "Rentals: "
+
+    rentals.each do |rental|
+      puts "Date: #{rental.date}, Book: #{rental.book.title} by #{rental.book.author}"
+    end
+  end
+
   def create_person
     print "Do you want to create a student (1) or a teacher (2)? [Input the number]: "
     person_type = gets.chomp
@@ -110,7 +130,7 @@ def main
     when "5"
       puts "Create a rental"
     when "6"
-      puts "List rentals by person ID"
+      bookstore.list_all_rentals()
     when "7"
       puts "Thank you for using this app!"
     end
