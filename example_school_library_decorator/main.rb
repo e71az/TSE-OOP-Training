@@ -3,6 +3,7 @@ require_relative "./book.rb"
 require_relative "./person.rb"
 require_relative "./rental.rb"
 require_relative "./student.rb"
+require_relative "./teacher.rb"
 
 class Bookstore
   def initialize
@@ -18,7 +19,7 @@ class Bookstore
     end
 
     @people.each do |person|
-      puts "Type: #{person.class} Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "Type: #{person.class}, Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 
