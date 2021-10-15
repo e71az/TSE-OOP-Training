@@ -95,6 +95,31 @@ class Bookstore
     @books << Book.new(title, author)
     puts "Book created succesfully"
   end
+
+  def create_rental
+    if @books.empty?
+      puts "A rental cannot be created because there are currently no books."
+      return
+    end
+
+    puts "Select a book from the following list by number"
+    @books.each_with_index do |book, index|
+      puts "#{index}.- Title: #{book.title}, Author: #{book.author}"
+    end
+    book_index = gets.chomp.to_i
+
+    puts "Select a person from the following list by number (not id)"
+    @people.each_with_index do |person, index|
+      puts "#{index}.- #{person.class}, Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    end
+    person_index = gets.chomp.to_i
+
+    print "\nDate: "
+    date = gets.chomp
+
+    @rentals << Rental.new(date, @books[book_index], @people[person_index])
+    puts "Rental created successfully"
+  end
 end
 
 def main
@@ -128,7 +153,7 @@ def main
     when "4"
       bookstore.create_book()
     when "5"
-      puts "Create a rental"
+      bookstore.create_rental()
     when "6"
       bookstore.list_all_rentals()
     when "7"
