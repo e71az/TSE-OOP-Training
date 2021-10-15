@@ -2,12 +2,24 @@
 require_relative "./book.rb"
 require_relative "./person.rb"
 require_relative "./rental.rb"
+require_relative "./student.rb"
 
 class Bookstore
   def initialize
     @books = []
-    @person = []
+    @people = []
     @rentals = []
+  end
+
+  def list_all_people
+    if @people.empty?
+      puts "No people found"
+      return
+    end
+
+    @people.each do |person|
+      puts "Type: #{person.class} Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    end
   end
 
   def list_all_books
@@ -19,6 +31,37 @@ class Bookstore
     @books.each do |book|
       puts "Title: #{book.title}, Author: #{book.author}"
     end
+  end
+
+  def create_person
+    print "Do you want to create a student (1) or a teacher (2)? [Input the number]: "
+    person_type = gets.chomp
+
+    if person_type != "1" and person_type != "2"
+      puts "Please choose 1 or 2."
+      return
+    end
+
+    print "Age: "
+    age = gets.chomp
+
+    print "Name: "
+    name = gets.chomp
+
+    if person_type == "1"
+      print "Has parent permission? [Y/N]: "
+      parent_permission = gets.chomp.downcase
+      parent_permission = parent_permission == "y" ? true : false
+
+      @people << Student.new(age, name, parent_permission)
+    else
+      print "Specialization: "
+      specialization = gets.chomp
+
+      @people << Teacher.new(age, specialization, name)
+    end
+
+    puts "Person created succesfully"
   end
 
   def create_book
@@ -58,9 +101,9 @@ def main
     when "1"
       bookstore.list_all_books()
     when "2"
-      puts "Display people"
+      bookstore.list_all_people()
     when "3"
-      puts "Create person"
+      bookstore.create_person()
     when "4"
       bookstore.create_book()
     when "5"
